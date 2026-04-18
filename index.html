@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="ro">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SimpleTalk Ultimate</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <link rel="stylesheet" href="style.css">
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-auth-compat.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+</head>
+<body>
+    <div id="auth-container">
+        <div class="header-aplicatie">SimpleTalk</div>
+        <div class="box-mare">
+            <div id="login-section">
+                <h1>Login</h1>
+                <input type="email" id="login-email" placeholder="Email">
+                <div class="pass-wrapper">
+                    <input type="password" id="login-pass" placeholder="Parolă">
+                    <i class="fa-solid fa-eye" onclick="togglePassword('login-pass', this)"></i>
+                </div>
+                <button class="btn-albastru" onclick="verificareLogare()">LOGARE</button>
+                <p onclick="schimbaSectiunea('recovery-section')" class="link-albastru">Ai uitat parola?</p>
+                <hr>
+                <button class="btn-verde" onclick="schimbaSectiunea('signup-section')">Cont Nou</button>
+            </div>
+            <div id="signup-section" style="display:none;">
+                <h1>Cont Nou</h1>
+                <input type="text" id="signup-nume" placeholder="Numele tău">
+                <input type="email" id="signup-email" placeholder="Email">
+                <div class="pass-wrapper">
+                    <input type="password" id="signup-pass" placeholder="Parolă">
+                    <i class="fa-solid fa-eye" onclick="togglePassword('signup-pass', this)"></i>
+                </div>
+                <button class="btn-verde" onclick="verificareSignup()">ÎNREGISTRARE</button>
+                <p onclick="schimbaSectiunea('login-section')" class="link-albastru">Înapoi</p>
+            </div>
+            <div id="recovery-section" style="display:none;">
+                <h1>Recuperare</h1>
+                <input type="email" id="recovery-email" placeholder="Email">
+                <button class="btn-albastru" onclick="verificareRecovery()">TRIMITE LINK</button>
+                <p onclick="schimbaSectiunea('login-section')" class="link-albastru">Înapoi</p>
+            </div>
+        </div>
+    </div>
+
+    <div id="home-section" style="display:none;">
+        <div class="chat-header">
+            <span id="nume-utilizator">Utilizator</span>
+            <div class="header-btns">
+                <button onclick="toggleMeniuAspect()" class="btn-header"><i class="fa-solid fa-palette"></i> Aspect</button>
+                <button onclick="deschideSuport()" class="btn-header"><i class="fa-solid fa-circle-question"></i> Ajutor</button>
+                <button onclick="deconectare()" class="btn-logout">Ieșire</button>
+            </div>
+        </div>
+        
+        <div id="meniu-aspect" style="display:none;">
+            <span>Alege Fundal:</span>
+            <button onclick="schimbaFundal('white')" class="btn-aspect" style="background:white;">Alb</button>
+            <button onclick="schimbaFundal('#e3effd')" class="btn-aspect" style="background:#e3effd;">Albastru</button>
+            <button onclick="schimbaFundal('#f5f5dc')" class="btn-aspect" style="background:#f5f5dc;">Bej</button>
+            <button onclick="schimbaFundal('url')" class="btn-aspect" style="background:#ddd;">Poză (URL)</button>
+        </div>
+
+        <div id="categorii-container" class="bara-categorii"></div>
+        <div id="mesaje-container" class="mesaje-box"></div>
+        <div class="input-chat-container">
+            <input type="file" id="upload-foto" accept="image/*" style="display:none" onchange="incarcaFoto(this)">
+            <button class="btn-icon" onclick="document.getElementById('upload-foto').click()"><i class="fa-solid fa-paperclip"></i></button>
+            <input type="text" id="mesaj-text" placeholder="Scrie ceva...">
+            <button onclick="trimiteMesaj()" class="btn-trimite-chat"><i class="fa-solid fa-paper-plane"></i></button>
+        </div>
+    </div>
+
+    <div id="suport-modal" class="modal">
+        <div class="modal-content">
+            <span class="close" onclick="inchideSuport()">&times;</span>
+            <h2>Centru de Ajutor 🆘</h2>
+            <div id="lista-faq"></div>
+        </div>
+    </div>
+
+    <script src="config.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>
